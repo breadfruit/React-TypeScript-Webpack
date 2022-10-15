@@ -1,6 +1,8 @@
 
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 
 module.exports = {
     mode: 'development',
@@ -13,6 +15,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, "public", "index.html"),
         }),
+        new MiniCssExtractPlugin(),
+        new WebpackManifestPlugin({ fileName: "manifest-client.json" }),
     ],
     devServer: {
         static: {
@@ -30,15 +34,27 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                include: [path.resolve(__dirname, '/src')],
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
             {
                 test: /\.css$/,
-                include: [path.resolve(__dirname, './src')],
                 exclude: ['/node_modules/'],
-                use: ["style-loader", "css-loader"],
+                use: [
+                    {
+                        loader: process.env.NODE_ENV === "development" ? 'style-loader' : MiniCssExtractPlugin.loader
+                    },
+                    "css-loader",
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            postcssOptions: {
+                                // 添加 autoprefixer 插件
+                                plugins: [require("autoprefixer")],
+                            },
+                        },
+                    }
+                ],
             },
         ]
     }
