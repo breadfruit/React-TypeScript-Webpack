@@ -1,15 +1,17 @@
 
-const path = require("path");
+const base = require("./webpack.base")
+const { merge } = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
+const path = require('path')
 
-module.exports = {
+module.exports = merge(base, {
     mode: 'development',
-    entry: "./src/index.tsx",
+    entry: "./src/entry-client.tsx",
     output: {
         filename: "main.js",
-        path: path.resolve(__dirname, "build"),
+        path: path.resolve(__dirname, "dist"),
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -18,28 +20,10 @@ module.exports = {
         new MiniCssExtractPlugin(),
         new WebpackManifestPlugin({ fileName: "manifest-client.json" }),
     ],
-    devServer: {
-        static: {
-            directory: path.join(__dirname, "build"),
-        },
-        port: 3000,
-    },
-    resolve: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx', 'css'],
-        alias: {
-            '@': path.resolve(__dirname, './src')
-        }
-    },
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
-            },
-            {
                 test: /\.css$/,
-                exclude: ['/node_modules/'],
                 use: [
                     {
                         loader: process.env.NODE_ENV === "development" ? 'style-loader' : MiniCssExtractPlugin.loader
@@ -55,7 +39,8 @@ module.exports = {
                         },
                     }
                 ],
+                exclude: ['/node_modules/'],
             },
         ]
     }
-};
+});
