@@ -1,12 +1,13 @@
 
-const base = require("./webpack.base")
-const { merge } = require('webpack-merge')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
-const path = require('path')
+import base from "./webpack.base"
+import { merge } from 'webpack-merge'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import { WebpackManifestPlugin } from 'webpack-manifest-plugin'
+import path from 'path'
+import { Configuration } from 'webpack'
 
-module.exports = merge(base, {
+const clientConfig: Configuration = merge(base, {
     mode: 'development',
     entry: "./src/entry-client.tsx",
     output: {
@@ -44,3 +45,6 @@ module.exports = merge(base, {
         ]
     }
 });
+
+
+export default clientConfig;

@@ -1,8 +1,9 @@
-const base = require("./webpack.base")
-const { merge } = require('webpack-merge')
-const path = require('path')
+import base from "./webpack.base"
+import { merge } from 'webpack-merge'
+import path from 'path'
+import { Configuration } from 'webpack'
 
-module.exports = merge(base, {
+const serverConfig: Configuration = merge(base, {
     entry: "./src/server-client.tsx",
     target: 'node',
     output: {
@@ -16,9 +17,10 @@ module.exports = merge(base, {
         rules: [
             {
                 test: /\.css$/,
-                loader: path.resolve(__dirname, './my-css-loader.js')
+                loader: path.resolve(__dirname, './my-css-loader.ts')
             }
         ]
     }
 });
 
+export default serverConfig;

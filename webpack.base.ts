@@ -1,5 +1,6 @@
-const path = require('path')
-module.exports = {
+import path from 'path'
+import { Configuration } from 'webpack'
+const baseConfig: Configuration = {
     mode: 'development',
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', 'css'],
@@ -24,3 +25,5 @@ module.exports = {
         ]
     }
 };
+
+export default baseConfig
