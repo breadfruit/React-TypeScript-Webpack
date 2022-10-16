@@ -11,6 +11,10 @@ const baseConfig: Configuration = {
     module: {
         rules: [
             {
+                test: /\.svg$/i,
+                use: ['raw-loader'],
+            },
+            {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
                 exclude: /node_modules/,

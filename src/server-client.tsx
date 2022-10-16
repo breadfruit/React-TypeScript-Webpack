@@ -4,18 +4,18 @@ import { renderToString } from 'react-dom/server'
 import App from './App'
 // import clientMainfest from '../dist/manifest-client.json'
 
-const clientMainfest = require('../build/manifest-client.json')
+const clientMainfest = require('../dist/manifest-client.json')
 
 
 const server = express()
 
 server.get('/', (req, res) => {
 
-    const html = renderToString(<App />)
-    const clientCss = clientMainfest['main.css']
-    const clientBundle = clientMainfest['main.js']
+  const html = renderToString(<App />)
+  const clientCss = clientMainfest['main.css']
+  const clientBundle = clientMainfest['main.js']
 
-    res.send(`
+  res.send(`
     <!DOCTYPE html>
     <html>
         <head>
@@ -34,7 +34,7 @@ server.get('/', (req, res) => {
 
 })
 
-server.use(express.static('../build'))
+server.use(express.static('../dist'))
 server.listen(3000, () => {
-    console.log('server is ready: http://localhost:3000')
+  console.log('server is ready: http://localhost:3000')
 })

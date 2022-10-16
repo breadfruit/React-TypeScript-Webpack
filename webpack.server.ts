@@ -11,6 +11,7 @@ const serverConfig: Configuration = merge(base, {
             name: 'MyLibrary',
             type: 'commonjs2'
         },
+        publicPath: '',
         filename: 'server.js',
     },
     module: {
